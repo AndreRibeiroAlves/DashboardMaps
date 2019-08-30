@@ -1,5 +1,22 @@
 # DashboardReactNative
 
+### Execução
+<p>clonar o repositório com git clone <Link do Repositório>
+<p>Abrir o cmd e navegar até a pasta clonada. ex: cd myapp
+<p>Digitar no cmd:
+<p> O Arquivo Inicialize.bat realiza os procedimentos abaixo
+<p> - yarn install
+<p> - yarn run expo start
+<p>Baixar o aplicativo do expo: https://play.google.com/store/apps/details?id=host.exp.exponent&hl=pt_BR
+<p>Escanear o código QR gerado.
+
+#### Observações:
+<p> Caso a opção Lan não funcione. utilize Tunel.
+<p> Para a opção Lan funcionar deve-se estar na mesma rede que o dispositivo que iniciou o expo.
+<p> é possivel modificar o ip de execução da lan através de set REACT_NATIVE_PACKAGER_HOSTNAME=192.168.0.101.
+
+## Instalação de Dependencias
+
 ### Baixar o Chocolatey
 Abrir o cmd.exe e digitar:
 <p>@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
