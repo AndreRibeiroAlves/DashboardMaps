@@ -1,32 +1,26 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, StyleSheet, Dimensions } from 'react-native';
+import { ScrollView, View, Text, Dimensions } from 'react-native';
 
 import MapView from 'react-native-maps';
+import styles from './styles/styles'
 
 export default class App extends Component {
   state = {
     places: [
       {
         id: 1,
-        title: 'Casa do café',
-        description: 'Café quentinho...',
+        title: 'Sensor 1',
+        description: 'Detalhes',
         latitude: -27.2106710,
         longitude: -49.6362700,
       },
       {
         id: 2,
-        title: 'RocketSeat',
-        description: 'Programação, empreendedorismo e mindset',
+        title: 'Sensor 2',
+        description: 'Detalhes',
         latitude: -27.2006710,
         longitude: -49.6362700,
       },
-      {
-        id: 3,
-        title: 'Casa do José',
-        description: 'José, tá em casa?',
-        latitude: -27.2006710,
-        longitude: -49.6262700,
-      }
     ]
   };
 
@@ -103,46 +97,3 @@ export default class App extends Component {
 }
 
 const { height, width } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end'
-  },
-
-  mapView: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-  },
-
-  placesContainer: {
-    width: '100%',
-    maxHeight: 200,
-  },
-
-  place: {
-    width: width - 40,
-    maxHeight: 200,
-    backgroundColor: '#FFF',
-    marginHorizontal: 20,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    padding: 20,
-  },
-
-  title: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    backgroundColor: 'transparent',
-  },
-
-  description: {
-    color: '#999',
-    fontSize: 12,
-    marginTop: 5,
-  },
-});

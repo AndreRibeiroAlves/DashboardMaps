@@ -30,6 +30,7 @@ yarn run expo start ./myapp
 <p>Adicionar portas 19000 e 19001 (expo) a excessão no firewall
 <p>yarn test ou npm test
 <p>yarn build ou npm build
+<p>yarn build ou npm build
 
 ### Procedimentos Opcionais:
 
