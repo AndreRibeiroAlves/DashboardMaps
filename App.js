@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, Dimensions } from 'react-native';
+import { ScrollView, View, Text} from 'react-native';
 
 import MapView from 'react-native-maps';
 import styles from './styles/styles'
@@ -74,7 +74,7 @@ export default class App extends Component {
 
             const { latitude, longitude, mark } = this.state.places[place];
 
-            this.mapView.animateToCoordinate({
+            this.mapView.animateCamera({
               latitude,
               longitude
             }, 500);
