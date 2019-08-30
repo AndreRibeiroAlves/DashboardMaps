@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text} from 'react-native';
+import { ScrollView, View, Text, Dimensions} from 'react-native';
 
 import MapView from 'react-native-maps';
 import styles from './styles/styles'
@@ -19,7 +19,28 @@ export default class App extends Component {
         title: 'Sensor 2',
         description: 'Detalhes',
         latitude: -27.2006710,
-        longitude: -49.6362700,
+        longitude: -49.6382700,
+      },
+      {
+        id: 3,
+        title: 'Sensor 3',
+        description: 'Detalhes',
+        latitude: -27.2008710,
+        longitude: -49.6332700,
+      },
+      {
+        id: 4,
+        title: 'Sensor 4',
+        description: 'Detalhes',
+        latitude: -27.2068710,
+        longitude: -49.6285700,
+      },
+      {
+        id: 5,
+        title: 'Sensor 5',
+        description: 'Detalhes',
+        latitude: -27.2066710,
+        longitude: -49.6364700,
       },
     ]
   };
@@ -43,8 +64,8 @@ export default class App extends Component {
           }}
           style={styles.mapView}
           rotateEnabled={false}
-          scrollEnabled={false}
-          zoomEnabled={false}
+          scrollEnabled={true}
+          zoomEnabled={true}
           showsPointsOfInterest={false}
           showBuildings={false}
           onMapReady={this._mapReady}
@@ -74,7 +95,7 @@ export default class App extends Component {
 
             const { latitude, longitude, mark } = this.state.places[place];
 
-            this.mapView.animateCamera({
+            this.mapView.animateToCoordinate({
               latitude,
               longitude
             }, 500);
@@ -95,5 +116,3 @@ export default class App extends Component {
     );
   }
 }
-
-const { height, width } = Dimensions.get('window');
