@@ -3,10 +3,9 @@ import { ScrollView, View, Text, Dimensions} from 'react-native';
 
 import MapView from 'react-native-maps';
 import styles from './styles/styles';
-import Sensores from './Sensores';
-import OItem from './OItem';
-import ListView from './ListViewExpandable';
-import MapViewMarker from './MapViewMarker'
+import Sensores from './objects/Sensores';
+import ListView from './components/ListViewExpandable';
+import MapViewMarker from './components/MapViewMarker'
 
 export default class App extends Component {
   constructor(){
@@ -88,7 +87,7 @@ export default class App extends Component {
             <ScrollView key={place.id} style={styles.place}>
               <Text style={styles.title}>{ place.title }</Text>
               <Text style={styles.description}>{ place.description }</Text>
-              <OItem/>
+              <ListView/>
             </ScrollView>
           )) }
 
