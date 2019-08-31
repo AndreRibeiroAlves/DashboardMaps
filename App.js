@@ -4,6 +4,8 @@ import { ScrollView, View, Text, Dimensions} from 'react-native';
 import MapView from 'react-native-maps';
 import styles from './styles/styles';
 import Sensores from './Sensores';
+import OItem from './OItem';
+import ListView from './ListViewExpandable';
 
 export default class App extends Component {
   constructor(){
@@ -19,7 +21,11 @@ export default class App extends Component {
     const { latitude, longitude } = this.state.places[0];
 
     return (
+
+      /* Tela Principal */
       <View style={styles.container}>
+        
+        {/* Tela do Mapa */}
         <MapView
           ref={map => this.mapView = map}
           initialRegion={{
@@ -36,6 +42,7 @@ export default class App extends Component {
           showBuildings={false}
           onMapReady={this._mapReady}
         >
+          {/* Markers do Mapa */}
           { this.state.places.map(place => (
             <MapView.Marker
               ref={mark => place.mark = mark}
@@ -48,7 +55,10 @@ export default class App extends Component {
               }}
             />
           ))}
+
         </MapView>
+        
+        {/*Painel Inferior da tela*/}
         <ScrollView
           style={styles.placesContainer}
           horizontal
@@ -71,13 +81,18 @@ export default class App extends Component {
             }, 500)
           }}
         >
+
           { this.state.places.map(place => (
-            <View key={place.id} style={styles.place}>
+            /* Dashboard será alocado aqui */
+            <ScrollView key={place.id} style={styles.place}>
               <Text style={styles.title}>{ place.title }</Text>
               <Text style={styles.description}>{ place.description }</Text>
-            </View>
+              <ListView/>
+            </ScrollView>
           )) }
+
         </ScrollView>
+
       </View>
     );
   }

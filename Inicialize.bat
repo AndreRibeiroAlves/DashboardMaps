@@ -1,3 +1,3 @@
 call yarn install
-set REACT_NATIVE_PACKAGER_HOSTNAME=192.168.43.189
+set REACT_NATIVE_PACKAGER_HOSTNAME=192.168.0.102
 call yarn expo start
