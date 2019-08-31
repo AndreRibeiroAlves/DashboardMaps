@@ -10,6 +10,8 @@ import {
   UIManager,
   TouchableOpacity,
   Platform,
+  Image,
+  ImageBackground,
 } from 'react-native';
 //import basic react native components
 
@@ -36,6 +38,7 @@ class ExpandableItemComponent extends Component {
       });
     }
   }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state.layoutHeight !== nextState.layoutHeight) {
       return true;
@@ -46,20 +49,30 @@ class ExpandableItemComponent extends Component {
   render() {
     return (
       <View>
-        {/*Header of the Expandable List Item*/}
+        {/*Header*/}
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={this.props.onClickFunction}
           style={styles.header}>
+
           <Text style={styles.headerText}>{this.props.item.category_name}</Text>
+          <Image
+            source={{
+              uri: 'https://reactnativecode.com/wp-content/uploads/2019/02/arrow_right_icon.png'
+            }}
+            style={styles.iconStyle} 
+          />
         </TouchableOpacity>
         <View
+
           style={{
             height: this.state.layoutHeight,
             overflow: 'hidden',
           }}>
-          {/*Content under the header of the Expandable List Item*/}
+
+          {/*Conteudo do ListView*/}
           {this.props.item.subcategory.map((item, key) => (
+
             <TouchableOpacity
               key={key}
               style={styles.content}
@@ -69,6 +82,7 @@ class ExpandableItemComponent extends Component {
               </Text>
               <View style={styles.separator} />
             </TouchableOpacity>
+
           ))}
         </View>
       </View>
@@ -77,7 +91,7 @@ class ExpandableItemComponent extends Component {
 }
 
 class ListView extends Component {
-  //Main View defined under this Class
+  //Main View
   constructor() {
     super();
     if (Platform.OS === 'android') {
@@ -89,14 +103,14 @@ class ListView extends Component {
   updateLayout = index => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     const array = [...this.state.listDataSource];
-    //For Single Expand at a time
+    //Para uma unica expansão por ves
     array.map((value, placeindex) =>
       placeindex === index
         ? (array[placeindex]['isExpanded'] = !array[placeindex]['isExpanded'])
         : (array[placeindex]['isExpanded'] = false)
     );
 
-    //For Multiple Expand at a time
+    //Para multiplas expansões
     //array[index]['isExpanded'] = !array[index]['isExpanded'];
     this.setState(() => {
       return {
@@ -108,15 +122,20 @@ class ListView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.topHeading}>Expandable List View</Text>
-        <ScrollView>
-          {this.state.listDataSource.map((item, key) => (
+
+        <Text style={styles.topHeading}>Detalhes</Text>
+        
+        <ScrollView style={{paddingBottom: 22}}>
             <ExpandableItemComponent
-              key={item.category_name}
-              onClickFunction={this.updateLayout.bind(this, key)}
-              item={item}
+              key={this.state.listDataSource[0].category_name}
+              onClickFunction={this.updateLayout.bind(this, 0)}
+              item={this.state.listDataSource[0]}
             />
-          ))}
+            <ExpandableItemComponent
+            key={this.state.listDataSource[1].category_name}
+            onClickFunction={this.updateLayout.bind(this, 1)}
+            item={this.state.listDataSource[1]}
+          />
         </ScrollView>
       </View>
     );
@@ -124,6 +143,17 @@ class ListView extends Component {
 }
 
 const styles = StyleSheet.create({
+
+  iconStyle: {
+
+    width: 30,
+    height: 30,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    tintColor: '#fff'
+
+  },
+
   container: {
     flex: 1,
     paddingTop: 30,
@@ -134,8 +164,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   header: {
-    backgroundColor: '#F5FCFF',
     padding: 16,
+    marginVertical: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#0091EA'
   },
   headerText: {
     fontSize: 16,
@@ -150,7 +184,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    color: '#606070',
+    color: '#000000',
     padding: 10,
   },
   content: {
