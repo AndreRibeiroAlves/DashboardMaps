@@ -6,6 +6,7 @@ import styles from './styles/styles';
 import Sensores from './Sensores';
 import OItem from './OItem';
 import ListView from './ListViewExpandable';
+import MapViewMarker from './MapViewMarker'
 
 export default class App extends Component {
   constructor(){
@@ -44,8 +45,8 @@ export default class App extends Component {
         >
           {/* Markers do Mapa */}
           { this.state.places.map(place => (
-            <MapView.Marker
-              ref={mark => place.mark = mark}
+            <MapViewMarker
+              place={place}
               title={place.title}
               description={place.description}
               key={place.id}
@@ -87,7 +88,7 @@ export default class App extends Component {
             <ScrollView key={place.id} style={styles.place}>
               <Text style={styles.title}>{ place.title }</Text>
               <Text style={styles.description}>{ place.description }</Text>
-              <ListView/>
+              <OItem/>
             </ScrollView>
           )) }
 
