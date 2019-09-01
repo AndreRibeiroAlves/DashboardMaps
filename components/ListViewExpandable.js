@@ -12,10 +12,55 @@ import {
   Platform,
   Image,
   ImageBackground,
+  Dimensions,
 } from 'react-native';
 //import basic react native components
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+} from 'react-native-chart-kit'
 
 function LineChartMid (props){
+  return (
+    <View>
+      <Text>
+        Bezier Line Chart
+      </Text>
+      <LineChart
+        data={{
+          labels: ['Min','Mid','Max'],
+          datasets: [{
+            data: [
+              12,
+              (12+36)/2,
+              36,
+            ]
+          }]
+        }}
+        width={Dimensions.get('window').width*0.7} // from react-native
+        height={182}
+        chartConfig={{
+          backgroundColor: 'transparent',
+          backgroundGradientFrom: 'lightgray',
+          backgroundGradientTo: 'silver',
+          decimalPlaces: 2, // optional, defaults to 2dp
+          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          style: {
+            borderRadius: 6,
+          }
+        }}
+        bezier
+        style={{
+          marginVertical: 4,
+          borderRadius: 6,
+        }}
+      />
+    </View>
+  );
+};
+
+function LineChartMid1 (props){
   return (
     <Text style={styles.text}>
         {props.id}. {props.item.type}.
