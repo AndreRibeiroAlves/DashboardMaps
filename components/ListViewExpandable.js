@@ -41,11 +41,11 @@ function LineChartMid (props){
         width={Dimensions.get('window').width*0.7} // from react-native
         height={182}
         chartConfig={{
-          backgroundColor: 'transparent',
+          backgroundColor: 'white',
           backgroundGradientFrom: 'lightgray',
           backgroundGradientTo: 'silver',
           decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          color: (opacity = 20) => `rgba(0, 0, 0, ${opacity})`,
           style: {
             borderRadius: 6,
           }

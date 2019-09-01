@@ -68,6 +68,11 @@ yarn start ou npm start
 ### Observações:
 É possivel realizar as instalações com o padrão neste projeto é com o yarn.
 
+### Bibilhotecas:
+<p> yarn expo install react-native-chart-kit
+<p> yarn expo install react-native-svg
+<p> yarn expo install react-native-svg-charts
+
 ### Links adicionais:
 <p>https://expo.io/
 <p>https://nodejs.org/en/
