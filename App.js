@@ -44,6 +44,8 @@ export default class App extends Component {
         >
           {/* Markers do Mapa */}
           { this.state.places.map(place => (
+            /*https://stackoverflow.com/questions/39654594/marker-click
+              -event-on-react-native-maps-not-working-in-react-ios*/
             <MapViewMarker
               place={place}
               title={place.title}
@@ -53,6 +55,7 @@ export default class App extends Component {
                 latitude: place.latitude,
                 longitude: place.longitude,
               }}
+              
             />
           ))}
 
@@ -81,15 +84,15 @@ export default class App extends Component {
             }, 500)
           }}
         >
-
-          { this.state.places.map(place => (
-            /* Dashboard será alocado aqui */
-            <ScrollView key={place.id} style={styles.place}>
-              <Text style={styles.title}>{ place.title }</Text>
-              <Text style={styles.description}>{ place.description }</Text>
-              <ListView/>
-            </ScrollView>
-          )) }
+        { this.state.places.map(place => (
+          /* Dashboard será alocado aqui */
+          
+          <ScrollView key={place.id} style={styles.place}>
+            <Text style={styles.title}>{ place.title }</Text>
+            {/*<Text style={styles.description}>{ place.description }</Text>*/}
+            <ListView/>
+          </ScrollView>
+        )) }
 
         </ScrollView>
 

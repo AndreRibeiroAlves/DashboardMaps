@@ -15,6 +15,44 @@ import {
 } from 'react-native';
 //import basic react native components
 
+function LineChartMid (props){
+  return (
+    <Text style={styles.text}>
+        {props.id}. {props.item.type}.
+        {props.item.values.map((item,key) => ( 
+          <Text key={key} style={styles.text}>
+            {key}. {item.max}. {item.min}
+          </Text>))
+        }
+    </Text>
+  );
+};
+function LineChartSingleValue (props){
+  return (
+    <Text style={styles.text}>
+        {props.id}. {props.item.type}.
+          {props.item.values.map((item,key) => ( 
+            <Text key={key} style={styles.text}>
+              {item.key}. {item.value}
+            </Text>))
+          }
+    </Text>
+  );
+};
+
+function DognutChartMultipleValues (props){
+  return (
+    <Text style={styles.text}>
+        {props.id}. {props.item.type}.
+          {props.item.values.map((item,key) => ( 
+            <Text key={key} style={styles.text}>
+              {item.key}. {item.value}. {item.gas}
+            </Text>))
+          }
+    </Text>
+  );
+};
+
 class ExpandableItemComponent extends Component {
   //Custom Component for the Expandable List
   constructor() {
@@ -71,18 +109,27 @@ class ExpandableItemComponent extends Component {
           }}>
 
           {/*Conteudo do ListView*/}
-          {this.props.item.subcategory.map((item, key) => (
+          {this.props.item.items.map((item, key) => (
 
             <TouchableOpacity
               key={key}
               style={styles.content}
-              onPress={() => alert('Id: ' + item.id + ' val: ' + item.val)}>
-              <Text style={styles.text}>
-                {key}. {item.val}
-              </Text>
+              onPress={() => alert('Id: ' + item.id + ' type: ' + item.type)}>
+
+               {  this.props.item.type == 1 ? 
+                    <LineChartMid id={key} item={item}/>
+                  : this.props.item.type == 2 ?
+                    <DognutChartMultipleValues id={key} item={item}/>
+                  : this.props.item.type == 3 ?
+                    <LineChartSingleValue id={key} item={item}/>
+                  : 
+                    <Text style={styles.text}>
+                      {key}. {item.type}
+                    </Text>
+                } 
+
               <View style={styles.separator} />
             </TouchableOpacity>
-
           ))}
         </View>
       </View>
@@ -125,17 +172,14 @@ class ListView extends Component {
 
         <Text style={styles.topHeading}>Detalhes</Text>
         
-        <ScrollView style={{paddingBottom: 22}}>
+        <ScrollView style={{paddingBottom: 20}}>
+          {this.state.listDataSource.map((item, key) => (
             <ExpandableItemComponent
-              key={this.state.listDataSource[0].category_name}
-              onClickFunction={this.updateLayout.bind(this, 0)}
-              item={this.state.listDataSource[0]}
+              key={item.category_name}
+              onClickFunction={this.updateLayout.bind(this, key)}
+              item={item}
             />
-            <ExpandableItemComponent
-            key={this.state.listDataSource[1].category_name}
-            onClickFunction={this.updateLayout.bind(this, 1)}
-            item={this.state.listDataSource[1]}
-          />
+          ))}
         </ScrollView>
       </View>
     );
@@ -156,7 +200,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    paddingTop: 30,
+    paddingTop: 10,
     backgroundColor: '#F5FCFF',
   },
   topHeading: {
@@ -164,7 +208,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   header: {
-    padding: 16,
+    padding: 10,
     marginVertical: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -174,6 +218,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 16,
     fontWeight: '500',
+    color: 'white',
   },
   separator: {
     height: 0.5,
@@ -192,6 +237,16 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     backgroundColor: '#fff',
   },
+  /*icon_circle: {
+    width: 30,
+    height: 30,
+    borderRadius: 50,
+    marginLeft: 16,
+    marginTop: 16,
+    background: rgba(255,255,255,.7),
+    alignItems: 'center',
+    float: left,
+  },*/
 });
 
 //Dummy content to show
@@ -199,78 +254,54 @@ const styles = StyleSheet.create({
 const CONTENT = [
   {
     isExpanded: false,
-    category_name: 'Item 1',
-    subcategory: [{ id: 1, val: 'Sub Cat 1' }, { id: 3, val: 'Sub Cat 3' }],
+    category_name: 'Temperatura',
+    type: 1,
+    image_link: 'https://live.hopu.eu/images/icon-sensor-noise.png',
+    items: [
+      { id: 1, type: 'line_chart', values: [{id: 1, max: 25.47, min: 24.02}] }
+    ],
   },
   {
     isExpanded: false,
-    category_name: 'Item 2',
-    subcategory: [{ id: 4, val: 'Sub Cat 4' }, { id: 5, val: 'Sub Cat 5' }],
+    category_name: 'Humidade',
+    type: 1,
+    image_link: 'https://live.hopu.eu/images/icon-sensor-crowd_monitoring.png',
+    items: [
+      { id: 1, type: 'line_chart', values: [{id: 1, max: 64.45, min: 50.47}] }
+    ],
   },
   {
     isExpanded: false,
-    category_name: 'Item 3',
-    subcategory: [{ id: 7, val: 'Sub Cat 7' }, { id: 9, val: 'Sub Cat 9' }],
+    category_name: 'Gases',
+    type: 2,
+    image_link: 'https://live.hopu.eu/images/icon-sensor-crowd_monitoring.png',
+    items: [
+      { id: 1, type: 'dognut_chart', values: [
+          {id: 1, value: 56.45, gas: 'O3'},
+          {id: 2, value: 19.36, gas: 'NO2'},
+          {id: 3, value: 51.44, gas: 'SO2'},
+          {id: 4, value: 9.87, gas: 'CO'}
+        ]
+      }
+    ],
   },
   {
     isExpanded: false,
-    category_name: 'Item 4',
-    subcategory: [{ id: 10, val: 'Sub Cat 10' }, { id: 12, val: 'Sub Cat 2' }],
+    category_name: 'Ruído',
+    type: 3,
+    image_link: 'https://live.hopu.eu/images/icon-sensor-crowd_monitoring.png',
+    items: [
+      { id: 1, type: 'line_chart', values: [{id: 1, value: 15.44}] }
+    ],
   },
   {
     isExpanded: false,
-    category_name: 'Item 5',
-    subcategory: [{ id: 13, val: 'Sub Cat 13' }, { id: 15, val: 'Sub Cat 5' }],
-  },
-  {
-    isExpanded: false,
-    category_name: 'Item 6',
-    subcategory: [{ id: 17, val: 'Sub Cat 17' }, { id: 18, val: 'Sub Cat 8' }],
-  },
-  {
-    isExpanded: false,
-    category_name: 'Item 7',
-    subcategory: [{ id: 20, val: 'Sub Cat 20' }],
-  },
-  {
-    isExpanded: false,
-    category_name: 'Item 8',
-    subcategory: [{ id: 22, val: 'Sub Cat 22' }],
-  },
-  {
-    isExpanded: false,
-    category_name: 'Item 9',
-    subcategory: [{ id: 26, val: 'Sub Cat 26' }, { id: 27, val: 'Sub Cat 7' }],
-  },
-  {
-    isExpanded: false,
-    category_name: 'Item 10',
-    subcategory: [{ id: 28, val: 'Sub Cat 28' }, { id: 30, val: 'Sub Cat 0' }],
-  },
-  {
-    isExpanded: false,
-    category_name: 'Item 11',
-    subcategory: [{ id: 31, val: 'Sub Cat 31' }],
-  },
-  {
-    isExpanded: false,
-    category_name: 'Item 12',
-    subcategory: [{ id: 34, val: 'Sub Cat 34' }],
-  },
-  {
-    isExpanded: false,
-    category_name: 'Item 13',
-    subcategory: [{ id: 38, val: 'Sub Cat 38' }, { id: 39, val: 'Sub Cat 9' }],
-  },
-  {
-    isExpanded: false,
-    category_name: 'Item 14',
-    subcategory: [{ id: 40, val: 'Sub Cat 40' }, { id: 42, val: 'Sub Cat 2' }],
-  },
-  {
-    isExpanded: false,
-    category_name: 'Item 15',
-    subcategory: [{ id: 43, val: 'Sub Cat 43' }, { id: 44, val: 'Sub Cat 44' }],
+    category_name: 'Bateria',
+    type: 3,
+    image_link: 'https://live.hopu.eu/images/icon-sensor-crowd_monitoring.png',
+    items: [
+      { id: 1, type: 'line_chart', values: [{id: 1, value: 10}] }
+    ],
   },
 ];
 
