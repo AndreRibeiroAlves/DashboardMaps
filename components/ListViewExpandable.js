@@ -21,6 +21,12 @@ import {
   PieChart,
 } from 'react-native-chart-kit'
 
+/*https://cmichel.io/charts-in-react-native-svg-and-d3-js
+https://www.npmjs.com/package/react-native-chart-kit
+https://www.npmjs.com/package/react-native-svg-charts
+https://live.hopu.eu/#/dashboard/ies-felipe-de-borbon:SmartSpot
+https://www.instamobile.io/react-native-tutorials/react-native-charts/
+https://reactnativeexample.com/tag/chart/*/
 function LineChartMid (props){
   return (
     <View>
