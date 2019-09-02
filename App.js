@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { ScrollView, View, Text, Dimensions} from 'react-native';
 
 import MapView from 'react-native-maps';
-import styles from './styles/styles';
-import Sensores from './objects/Sensores';
-import ListView from './components/ListViewExpandable';
-import MapViewMarker from './components/MapViewMarker'
+import styles from 'styles/styles';
+import Sensores from 'objects/Sensores';
+import ListView from 'library/components/ListViewExpandable';
+import MapViewMarker from 'library/components/MapViewMarker'
 
 export default class App extends Component {
   constructor(){
