@@ -14,11 +14,11 @@ export default class App extends Component {
   }
 
   _mapReady = () => {
-    this.state.places[0].mark.showCallout();
+    this.state.markers[0].mark.showCallout();
   };
 
   render() {
-    const { latitude, longitude } = this.state.places[0];
+    const { latitude, longitude } = this.state.markers[0];
 
     return (
 
@@ -43,11 +43,11 @@ export default class App extends Component {
           onMapReady={this._mapReady}
         >
           {/* Markers do Mapa */}
-          { this.state.places.map(place => (
+          { this.state.markers.map(place => (
             /*https://stackoverflow.com/questions/39654594/marker-click
               -event-on-react-native-maps-not-working-in-react-ios*/
             <MapViewMarker
-              place={place}
+              marker={place}
               title={place.title}
               description={place.description}
               key={place.id}
@@ -72,19 +72,19 @@ export default class App extends Component {
               ? e.nativeEvent.contentOffset.x / Dimensions.get('window').width
               : 0;
 
-            const { latitude, longitude, mark } = this.state.places[place];
+            const { latitude, longitude, mark } = this.state.markers[place];
 
             this.mapView.animateToCoordinate({
               latitude,
               longitude
             }, 500);
 
-            setTimeout(() => {
+            {/*setTimeout(() => {
               mark.showCallout();
-            }, 500)
+            }, 500)*/}
           }}
         >
-        { this.state.places.map(place => (
+        { this.state.markers.map(place => (
           /* Dashboard será alocado aqui */
           
           <ScrollView key={place.id} style={styles.place}>

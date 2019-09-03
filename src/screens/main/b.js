@@ -63,7 +63,7 @@ export default class App extends Component {
             /*https://stackoverflow.com/questions/39654594/marker-click
               -event-on-react-native-maps-not-working-in-react-ios*/
               <MapViewMarker
-                marker={marker}
+                marker
                 title={marker.title}
                 description={marker.description}
                 key={marker.id}
@@ -105,7 +105,7 @@ export default class App extends Component {
           <ScrollView key={marker.id} style={styles.place}>
             <Text style={styles.title}>{ marker.title }</Text>
             {/*<Text style={styles.description}>{ place.description }</Text>*/}
-            <ListView/>
+            {/*<ListView/>*/}
           </ScrollView>
         )) }
 

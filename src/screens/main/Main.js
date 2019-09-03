@@ -6,20 +6,37 @@ import styles from 'styles/styles';
 import Sensores from 'objects/Sensores';
 import ListView from 'library/components/ListViewExpandable';
 import MapViewMarker from 'library/components/MapViewMarker'
+import MapStyle from './MapStyle'
 
 export default class App extends Component {
   constructor(){
     super();
     this.state = new Sensores().estado;
-  }
+    this.region = this.getInitialRegion();
 
+    /*this.onRegionChange = this.onRegionChange.bind(this);*/
+  }
+  
   _mapReady = () => {
     this.state.markers[0].mark.showCallout();
   };
+  
+  getInitialRegion() {
+    const { latitude, longitude } = this.state.markers[0];
+    return {
+        latitude,
+        longitude,
+        latitudeDelta: 0.0542,
+        longitudeDelta: 0.0331,
+      };
+  };
+
+  /*onRegionChange(region) {
+    this.setState({ region });
+  }*/
 
   render() {
     const { latitude, longitude } = this.state.markers[0];
-
     return (
 
       /* Tela Principal */
@@ -28,39 +45,39 @@ export default class App extends Component {
         {/* Tela do Mapa */}
         <MapView
           ref={map => this.mapView = map}
-          initialRegion={{
-            latitude,
-            longitude,
-            latitudeDelta: 0.0142,
-            longitudeDelta: 0.0231,
-          }}
+          
+          /*onRegionChange={this.onRegionChange}*/
+
+          initialRegion={this.region}
+
           style={styles.mapView}
           rotateEnabled={false}
           scrollEnabled={true}
           zoomEnabled={true}
           showsPointsOfInterest={false}
           showBuildings={false}
+          customMapStyle={MapStyle()}
           onMapReady={this._mapReady}
         >
+
           {/* Markers do Mapa */}
-          { this.state.markers.map(place => (
+          {this.state.markers.map(mar => (
             /*https://stackoverflow.com/questions/39654594/marker-click
               -event-on-react-native-maps-not-working-in-react-ios*/
-            <MapViewMarker
-              place={place}
-              title={place.title}
-              description={place.description}
-              key={place.id}
-              coordinate={{
-                latitude: place.latitude,
-                longitude: place.longitude,
-              }}
-              
-            />
+              <MapViewMarker
+                marker={mar}
+                title={mar.title}
+                description={mar.description}
+                key={mar.id}
+                coordinate={{
+                  latitude: mar.latitude,
+                  longitude: mar.longitude,
+                }}
+              />
           ))}
 
         </MapView>
-        
+
         {/*Painel Inferior da tela*/}
         <ScrollView
           style={styles.placesContainer}
@@ -72,11 +89,14 @@ export default class App extends Component {
               ? e.nativeEvent.contentOffset.x / Dimensions.get('window').width
               : 0;
 
-            const { latitude, longitude, mark } = this.state.markers[place];
+            const { latitude, longitude, latitudeDelta, longitudeDelta, mark } = this.state.markers[place];
 
-            this.mapView.animateToCoordinate({
+            
+            this.mapView.animateToRegion({
               latitude,
-              longitude
+              longitude,
+              latitudeDelta,
+              longitudeDelta,
             }, 500);
 
             setTimeout(() => {
@@ -84,11 +104,11 @@ export default class App extends Component {
             }, 500)
           }}
         >
-        { this.state.markers.map(place => (
+        { this.state.markers.map(marker => (
           /* Dashboard será alocado aqui */
           
-          <ScrollView key={place.id} style={styles.place}>
-            <Text style={styles.title}>{ place.title }</Text>
+          <ScrollView key={marker.id} style={styles.place}>
+            <Text style={styles.title}>{ marker.title }</Text>
             {/*<Text style={styles.description}>{ place.description }</Text>*/}
             <ListView/>
           </ScrollView>
