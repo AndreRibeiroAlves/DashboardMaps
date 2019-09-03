@@ -12,10 +12,10 @@ export default class MapViewMarker extends Component{
         this.description = this.props.description;
         this.id = this.props.id;
         this.coordinate = this.props.coordinate;
-        this.place = this.props.place;
+        this.marker = this.props.marker;
         return(
             <MapView.Marker
-                ref={mark => this.place.mark = mark}
+                ref={mark => this.marker.mark = mark}
                 title={this.title}
                 description={this.description}
                 key={this.id}

@@ -72,6 +72,9 @@ yarn start ou npm start
 <p> yarn expo install react-native-chart-kit
 <p> yarn expo install react-native-svg
 <p> yarn expo install react-native-svg-charts
+<p> yarn expo install react-navigation
+<p> yarn expo install react-navigation-drawer
+<p> yarn expo install react-native-reanimated
 
 ### Links adicionais:
 <p>https://expo.io/
