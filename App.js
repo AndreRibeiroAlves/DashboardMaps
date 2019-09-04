@@ -4,6 +4,7 @@ import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import Main from 'screens/main/Main';
+import Dashboard from 'screens/dashboard/Dashboard'
 /*import Contato from './src/ex';*/
 import CustomDrawer from 'library/components/CustomDrawer';
 
@@ -11,6 +12,9 @@ const Navegador = createDrawerNavigator({
   Main: {
     screen: Main
   },
+  Dashboard:{
+    screen: Dashboard
+  }
   /*ex: {
     screen: ex
   }*/

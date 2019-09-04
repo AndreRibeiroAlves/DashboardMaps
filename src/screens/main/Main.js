@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, Dimensions} from 'react-native';
+import { ScrollView, View, Text, Dimensions, Button} from 'react-native';
+import { UrlTile } from 'react-native-maps';
 
 import MapView from 'react-native-maps';
 import styles from 'styles/styles';
@@ -42,7 +43,8 @@ export default class App extends Component {
       /* Tela Principal */
       <View style={styles.container}>
         
-        {/* Tela do Mapa */}
+        {/* Tela do Mapa */
+        /* https://github.com/react-native-community/react-native-maps/blob/master/README.md */}
         <MapView
           ref={map => this.mapView = map}
           
@@ -106,9 +108,9 @@ export default class App extends Component {
         >
         { this.state.markers.map(marker => (
           /* Dashboard será alocado aqui */
-          
           <ScrollView key={marker.id} style={styles.place}>
             <Text style={styles.title}>{ marker.title }</Text>
+            <Button onPress={()=> this.props.navigation.navigate('Dashboard')} title='Dashboard' />
             {/*<Text style={styles.description}>{ place.description }</Text>*/}
             <ListView/>
           </ScrollView>

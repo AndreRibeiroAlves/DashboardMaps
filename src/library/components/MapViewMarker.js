@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, Dimensions} from 'react-native';
 
+import { Callout } from 'react-native-maps';
+
+import styles from 'styles/styles';
 import MapView from 'react-native-maps';
 
 export default class MapViewMarker extends Component{
@@ -20,6 +23,7 @@ export default class MapViewMarker extends Component{
                 description={this.description}
                 key={this.id}
                 coordinate={this.coordinate}
+                /*image={require('library/img/perfil.png')}*/
             />
         )
     }
