@@ -47,6 +47,15 @@ export default class App extends Component {
     var modalBackgroundStyle = {
       backgroundColor: 'rgba(0, 0, 0, 0.5)'
     };
+    var modalStyle = {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 5,
+      margin: 20,
+      backgroundColor: '#ecf0f1',
+    };
+
     var innerContainerTransparentStyle = {backgroundColor: '#fff', padding: 20};
 
     return (
@@ -102,21 +111,16 @@ export default class App extends Component {
               onRequestClose={() => this.setModalVisible(false)}
 
               >
-              <View style={[styles.container, modalBackgroundStyle]}>
+              <View style={[modalStyle, modalBackgroundStyle]}>
                 <View style={innerContainerTransparentStyle}>
-                  <Text>This is a modal</Text>
-
+                  <Text>Informações</Text>
+                  <ListView/>
                   <Button title='close'
                     onPress={this.setModalVisible.bind(this, false)}/>
 
                 </View>
               </View>
             </Modal>
-
-            <Button
-              title="Press me"
-              onPress={this._handleButtonPress}
-            />
         
         </View>
 
