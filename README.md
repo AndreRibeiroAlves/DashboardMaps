@@ -82,3 +82,4 @@ yarn start ou npm start
 <p>https://www.python.org/
 <p>https://oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html
 <p>https://pt-br.reactjs.org/
+<p>https://snack.expo.io/
