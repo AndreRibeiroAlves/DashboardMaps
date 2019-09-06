@@ -9,6 +9,47 @@ import ListView from 'library/components/ListViewExpandable';
 import MapViewMarker from 'library/components/MapViewMarker'
 import MapStyle from './MapStyle'
 
+class ModalMap extends Component{
+
+  render(){  
+
+    var modalBackgroundStyle = {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    };
+    var modalStyle = {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 5,
+      margin: 20,
+      backgroundColor: '#ecf0f1',
+    };
+    var innerContainerTransparentStyle = {backgroundColor: '#fff', padding: 20};
+
+    TelaMapa = this.props.TelaMapa;
+
+    return(
+      <Modal
+        animationType='fade'
+        transparent={true}
+        visible={TelaMapa.state.modalVisible}
+        onRequestClose={() => TelaMapa.setModalVisible(false)}
+        >
+
+        <View style={[modalStyle, modalBackgroundStyle]}>
+          <View style={innerContainerTransparentStyle}>
+            <Text>Informações</Text>
+            <ListView/>
+            <Button title='close'
+              onPress={TelaMapa.setModalVisible.bind(TelaMapa, false)}/>
+          </View>
+        </View>
+
+      </Modal>
+    );
+  }
+}
+
 export default class App extends Component {
   constructor(){
     super();
@@ -43,20 +84,6 @@ export default class App extends Component {
 
   render() {
     const { latitude, longitude } = this.state.markers[0];
-        
-    var modalBackgroundStyle = {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)'
-    };
-    var modalStyle = {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: 5,
-      margin: 20,
-      backgroundColor: '#ecf0f1',
-    };
-
-    var innerContainerTransparentStyle = {backgroundColor: '#fff', padding: 20};
 
     return (
 
@@ -102,26 +129,7 @@ export default class App extends Component {
         </MapView>
 
         <View style={styles.container}>
-
-          <Modal
-              animationType='fade'
-              transparent={true}
-              visible={this.state.modalVisible}
-              
-              onRequestClose={() => this.setModalVisible(false)}
-
-              >
-              <View style={[modalStyle, modalBackgroundStyle]}>
-                <View style={innerContainerTransparentStyle}>
-                  <Text>Informações</Text>
-                  <ListView/>
-                  <Button title='close'
-                    onPress={this.setModalVisible.bind(this, false)}/>
-
-                </View>
-              </View>
-            </Modal>
-        
+          <ModalMap TelaMapa={this}/>
         </View>
 
       </View>
