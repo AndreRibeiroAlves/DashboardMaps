@@ -8,24 +8,20 @@ import Sensores from 'objects/Sensores';
 import ListView from 'library/components/ListViewExpandable';
 import MapViewMarker from 'library/components/MapViewMarker'
 import MapStyle from './MapStyle'
+import ModalMap from 'library/components/ModalMap'
 
 export default class App extends Component {
   constructor(){
     super();
     this.state = new Sensores().estado;
-    this.state.modalVisible = false;
     this.region = this.getInitialRegion();
 
     /*this.onRegionChange = this.onRegionChange.bind(this);*/
   }
   
-  _handleButtonPress = () => {
-    this.setModalVisible(true);
+  _mapReady = () => {
+    this.state.markers[0].mark.showCallout();
   };
-
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
-  }
   
   getInitialRegion() {
     const { latitude, longitude } = this.state.markers[0];
@@ -43,12 +39,6 @@ export default class App extends Component {
 
   render() {
     const { latitude, longitude } = this.state.markers[0];
-        
-    var modalBackgroundStyle = {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)'
-    };
-    var innerContainerTransparentStyle = {backgroundColor: '#fff', padding: 20};
-
     return (
 
       /* Tela Principal */
@@ -70,19 +60,18 @@ export default class App extends Component {
           showsPointsOfInterest={false}
           showBuildings={false}
           customMapStyle={MapStyle()}
+          onMapReady={this._mapReady}
         >
 
           {/* Markers do Mapa */}
           {this.state.markers.map(mar => (
             /*https://stackoverflow.com/questions/39654594/marker-click
               -event-on-react-native-maps-not-working-in-react-ios*/
-              
               <MapViewMarker
                 marker={mar}
                 title={mar.title}
                 description={mar.description}
                 key={mar.id}
-                event={this._handleButtonPress}
                 coordinate={{
                   latitude: mar.latitude,
                   longitude: mar.longitude,
@@ -92,33 +81,43 @@ export default class App extends Component {
 
         </MapView>
 
-        <View style={styles.container}>
+        {/*Painel Inferior da tela*/}
+        <ScrollView
+          style={styles.placesContainer}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onMomentumScrollEnd={(e) => {
+            const place = (e.nativeEvent.contentOffset.x > 0)
+              ? e.nativeEvent.contentOffset.x / Dimensions.get('window').width
+              : 0;
 
-          <Modal
-              animationType='fade'
-              transparent={true}
-              visible={this.state.modalVisible}
-              
-              onRequestClose={() => this.setModalVisible(false)}
+            const { latitude, longitude, latitudeDelta, longitudeDelta, mark } = this.state.markers[place];
 
-              >
-              <View style={[styles.container, modalBackgroundStyle]}>
-                <View style={innerContainerTransparentStyle}>
-                  <Text>This is a modal</Text>
+            
+            this.mapView.animateToRegion({
+              latitude,
+              longitude,
+              latitudeDelta,
+              longitudeDelta,
+            }, 500);
 
-                  <Button title='close'
-                    onPress={this.setModalVisible.bind(this, false)}/>
+            setTimeout(() => {
+              mark.showCallout();
+            }, 500)
+          }}
+        >
+        { this.state.markers.map(marker => (
+          /* Dashboard será alocado aqui */
+          <ScrollView key={marker.id} style={styles.place}>
+            <Text style={styles.title}>{ marker.title }</Text>
+            <Button onPress={()=> /*this.props.navigation.navigate('Dashboard')*/ <ModalMap/>} title='Dashboard' />
+            {/*<Text style={styles.description}>{ place.description }</Text>*/}
+            <ListView/>
+          </ScrollView>
+        )) }
 
-                </View>
-              </View>
-            </Modal>
-
-            <Button
-              title="Press me"
-              onPress={this._handleButtonPress}
-            />
-        
-        </View>
+        </ScrollView>
 
       </View>
     );

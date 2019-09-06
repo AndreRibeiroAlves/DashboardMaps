@@ -35,3 +35,6 @@ const Navegador = createDrawerNavigator({
 const AppContainer = createAppContainer(Navegador);
 
 export default AppContainer;
+
+/*https://riptutorial.com/react-native/example/29660/transparent-modal-example
+https://expo.io/snacks/@react-navigation*/
