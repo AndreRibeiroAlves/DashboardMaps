@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   
     placesContainer: {
       width: '100%',
-      maxHeight: 200,
+      maxHeight: 82,
     },
   
     place: {

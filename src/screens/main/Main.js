@@ -8,47 +8,7 @@ import Sensores from 'objects/Sensores';
 import ListView from 'library/components/ListViewExpandable';
 import MapViewMarker from 'library/components/MapViewMarker'
 import MapStyle from './MapStyle'
-
-class ModalMap extends Component{
-
-  render(){  
-
-    var modalBackgroundStyle = {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)'
-    };
-    var modalStyle = {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: 5,
-      margin: 20,
-      backgroundColor: '#ecf0f1',
-    };
-    var innerContainerTransparentStyle = {backgroundColor: '#fff', padding: 20};
-
-    TelaMapa = this.props.TelaMapa;
-
-    return(
-      <Modal
-        animationType='fade'
-        transparent={true}
-        visible={TelaMapa.state.modalVisible}
-        onRequestClose={() => TelaMapa.setModalVisible(false)}
-        >
-
-        <View style={[modalStyle, modalBackgroundStyle]}>
-          <View style={innerContainerTransparentStyle}>
-            <Text>Informações</Text>
-            <ListView/>
-            <Button title='close'
-              onPress={TelaMapa.setModalVisible.bind(TelaMapa, false)}/>
-          </View>
-        </View>
-
-      </Modal>
-    );
-  }
-}
+import Dashboard from '../dashboard/Dashboard';
 
 export default class App extends Component {
   constructor(){
@@ -67,6 +27,10 @@ export default class App extends Component {
   setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
   }
+  
+  _mapReady = () => {
+    this.state.markers[0].mark.showCallout();
+  };
   
   getInitialRegion() {
     const { latitude, longitude } = this.state.markers[0];
@@ -105,6 +69,7 @@ export default class App extends Component {
           zoomEnabled={true}
           showsPointsOfInterest={false}
           showBuildings={false}
+          onMapReady={this._mapReady}
           customMapStyle={MapStyle()}
         >
 
@@ -127,10 +92,53 @@ export default class App extends Component {
           ))}
 
         </MapView>
+        
+        {/*Painel Inferior da tela*/}
+        <ScrollView
+          style={styles.placesContainer}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onMomentumScrollEnd={(e) => {
+            const place = (e.nativeEvent.contentOffset.x > 0)
+              ? e.nativeEvent.contentOffset.x / Dimensions.get('window').width
+              : 0;
 
-        <View style={styles.container}>
-          <ModalMap TelaMapa={this}/>
-        </View>
+            const { latitude, longitude, latitudeDelta, longitudeDelta, mark } = this.state.markers[place];
+
+            
+            this.mapView.animateToRegion({
+              latitude,
+              longitude,
+              latitudeDelta,
+              longitudeDelta,
+            }, 500);
+
+            setTimeout(() => {
+              mark.showCallout();
+            }, 500)
+          }}
+        >
+        { this.state.markers.map(marker => (
+          /* Dashboard será alocado aqui */
+          <ScrollView key={marker.id} style={styles.place}>
+            <Text style={styles.title}>{ marker.title }</Text>
+            {/*<Button onPress={()=> this.props.navigation.navigate('Dashboard') or <ModalMap/>} title='Dashboard' />*/}
+            {/*<Text style={styles.description}>{ place.description }</Text>*/}
+          </ScrollView>
+        )) }
+
+        </ScrollView>
+
+          <Modal
+            animationType='fade'
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => this.setModalVisible(false)}
+            >
+              <Dashboard TelaMapa={this}/>
+
+          </Modal>
 
       </View>
     );
