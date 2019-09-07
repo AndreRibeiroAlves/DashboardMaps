@@ -86,6 +86,7 @@ export default class App extends Component {
                 description={mar.description}
                 key={mar.id}
                 event={this._handleButtonPress}
+                parent={this}
                 coordinate={{
                   latitude: mar.latitude,
                   longitude: mar.longitude,
@@ -138,7 +139,7 @@ export default class App extends Component {
             visible={this.state.modalVisible}
             onRequestClose={() => this.setModalVisible(false)}
             >
-                <Dashboard TelaMapa={this} data={this.state.markers[0]}/>
+                <Dashboard TelaMapa={this} /*data={this.state.markers[0]}*//>
 
           </Modal>
 

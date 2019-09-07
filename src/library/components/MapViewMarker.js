@@ -17,6 +17,7 @@ export default class MapViewMarker extends Component{
         this.coordinate = this.props.coordinate;
         this.marker = this.props.marker;
         this.event = this.props.event;
+        this.parent = this.props.parent;
         return(
             <MapView.Marker
                 ref={mark => this.marker.mark = mark}
@@ -24,7 +25,11 @@ export default class MapViewMarker extends Component{
                 description={this.description}
                 key={this.id}
                 coordinate={this.coordinate}
-                onCalloutPress={this.event(this.id)}
+                parent={this.parent}
+                onCalloutPress={(key) => {
+                    this.parent.setState({selectedMarkerID: key});
+                    this.parent.setModalVisible(true);
+                  }}
                 /*image={require('library/img/perfil.png')}*/
             >
                 {/*<MapView.Callout tooltip style={styles.customView}>
