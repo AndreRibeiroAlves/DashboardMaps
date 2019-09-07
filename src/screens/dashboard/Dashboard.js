@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, Dimensions, Button, Modal} from 'react-native';
+import { ScrollView, View, Text, Dimensions, Button,TouchableOpacity} from 'react-native';
 
 import styles from 'styles/styles';
+import Sensores from 'objects/Sensores'
 import ListView from 'library/components/ListViewExpandable';
+import { connect } from 'react-redux'
+import { closeModal } from '../ModalActions'
 
-export default class Dashboard extends Component {
+export class Dashboard extends Component {
   constructor(){
     super();
+    this.state = new Sensores().estado;
+
   }
 
   render() {
@@ -24,17 +29,14 @@ export default class Dashboard extends Component {
     };
     var innerContainerTransparentStyle = {backgroundColor: '#fff', padding: 20};
 
-    TelaMapa = this.props.TelaMapa;
-    const marker = this.props.marker;
-
+    const selectedMarker = this.state.markers[this.props.selectedMarkerID-1];
     return (
       /* Tela Principal */
 
       <View style={[modalStyle, modalBackgroundStyle]}>
         <View style={innerContainerTransparentStyle}>
           <Text>Informações</Text>
-          <Text>{marker}</Text>
-          <ListView/>
+          <Text>{selectedMarker.title}</Text>
 
           {/*<View style={{padding:30, backgroundColor: 'rgba(52, 52, 52, 0.8)'}}>
             <ScrollView>*/}
@@ -43,9 +45,20 @@ export default class Dashboard extends Component {
           </View>*/}
 
           <Button title='close'
-            onPress={TelaMapa.onCloseModal.bind(TelaMapa)}/>
+            onPress={()=>this.props.closeModal()}/>
         </View>
       </View>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+    return{
+      selectedMarkerID: state.modal.selectedMarkerID,
+      modalEnabled: state.modal.modalEnabled,
+    };
+};
+
+const DashboardConnect = connect(mapStateToProps,{closeModal})(Dashboard);
+
+export default DashboardConnect;
