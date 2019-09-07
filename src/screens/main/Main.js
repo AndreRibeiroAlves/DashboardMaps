@@ -12,6 +12,7 @@ import Dashboard from '../dashboard/Dashboard';
 
 import { connect } from 'react-redux'
 import { closeModal,changeMarker,openModal } from '../ModalActions'
+import { _mapReady } from '../SensoresActions'
 
 export class Main extends Component {
   constructor(){
@@ -42,6 +43,8 @@ export class Main extends Component {
 
   render() {
     const { latitude, longitude } = this.state.markers[0];
+    const tmarkers = this.props.markers;
+    const markerid = this.props.selectedMarkerID - 1;
 
     return (
 
@@ -121,7 +124,8 @@ export class Main extends Component {
           /* Dashboard será alocado aqui */
           <ScrollView key={marker.id} style={styles.place}>
             <Text style={styles.title}>{ marker.title }</Text>
-            <Text style={styles.title}>{ this.props.selectedMarkerID }</Text>
+            <Text style={styles.title}>{ markerid }</Text>
+            <Text style={styles.title}>{ tmarkers[markerid].title }</Text>
             {/*<Button onPress={()=> this.props.navigation.navigate('Dashboard') or <ModalMap/>} title='Dashboard' />*/}
             {/*<Text style={styles.description}>{ place.description }</Text>*/}
           </ScrollView>
@@ -148,9 +152,11 @@ const mapStateToProps = (state) => {
     return{
       selectedMarkerID: state.modal.selectedMarkerID,
       modalEnabled: state.modal.modalEnabled,
+      markers: state.sensores.markers,
     };
 };
 
-const MainConnect = connect(mapStateToProps,{closeModal,changeMarker,openModal})(Main);
+const MainConnect = connect(mapStateToProps,
+      {closeModal, changeMarker, openModal, _mapReady})(Main);
 
 export default MainConnect;

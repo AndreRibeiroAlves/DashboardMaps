@@ -1,5 +1,5 @@
 const initialState = {
-    selectedMarkerID: 0,
+    selectedMarkerID: 1,
     modalEnabled: false,
 };
 
