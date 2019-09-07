@@ -36,6 +36,12 @@ export default class Dashboard extends Component {
           <Text>{marker}</Text>
           <ListView/>
 
+          {/*<View style={{padding:30, backgroundColor: 'rgba(52, 52, 52, 0.8)'}}>
+            <ScrollView>*/}
+                <ListView/>
+            {/*</ScrollView>
+          </View>*/}
+
           <Button title='close'
             onPress={TelaMapa.onCloseModal.bind(TelaMapa)}/>
         </View>

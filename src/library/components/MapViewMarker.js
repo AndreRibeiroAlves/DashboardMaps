@@ -50,6 +50,6 @@ export default class MapViewMarker extends Component{
         </View>
                 </MapView.Callout>*/}
             </MapView.Marker>
-        )
+        );
     }
 }
