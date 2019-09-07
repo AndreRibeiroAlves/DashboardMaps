@@ -32,7 +32,6 @@ export default class Dashboard extends Component {
       <View style={[modalStyle, modalBackgroundStyle]}>
         <View style={innerContainerTransparentStyle}>
           <Text>Informações</Text>
-          <Text>{this.props.data.title}</Text>
 
           {/*<View style={{padding:30, backgroundColor: 'rgba(52, 52, 52, 0.8)'}}>
             <ScrollView>*/}

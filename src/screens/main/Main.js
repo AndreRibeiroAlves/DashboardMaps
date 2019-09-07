@@ -14,20 +14,9 @@ export default class App extends Component {
   constructor(){
     super();
     this.state = new Sensores().estado;
-    this.state.modalVisible = false;
-    this.state.selectedMarkerID = 0;
     this.region = this.getInitialRegion();
 
     /*this.onRegionChange = this.onRegionChange.bind(this);*/
-  }
-  
-  _handleButtonPress = (key) => {
-    this.setState({selectedMarkerID: key});
-    this.setModalVisible(true);
-  };
-
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
   }
   
   _mapReady = () => {
@@ -85,7 +74,6 @@ export default class App extends Component {
                 title={mar.title}
                 description={mar.description}
                 key={mar.id}
-                event={this._handleButtonPress}
                 coordinate={{
                   latitude: mar.latitude,
                   longitude: mar.longitude,
@@ -131,16 +119,6 @@ export default class App extends Component {
         )) }
 
         </ScrollView>
-
-          <Modal
-            animationType='fade'
-            transparent={true}
-            visible={this.state.modalVisible}
-            onRequestClose={() => this.setModalVisible(false)}
-            >
-                <Dashboard TelaMapa={this} data={this.state.markers[0]}/>
-
-          </Modal>
 
       </View>
     );
