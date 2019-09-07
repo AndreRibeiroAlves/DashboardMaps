@@ -7,7 +7,7 @@ import styles from 'styles/styles';
 import Sensores from 'objects/Sensores';
 import ListView from 'library/components/ListViewExpandable';
 import MapViewMarker from 'library/components/MapViewMarker'
-import MapStyle from './MapStyle'
+import MapStyle from 'styles/MapStyle'
 import Dashboard from '../dashboard/Dashboard';
 
 export default class App extends Component {
@@ -15,12 +15,14 @@ export default class App extends Component {
     super();
     this.state = new Sensores().estado;
     this.state.modalVisible = false;
+    this.state.selectedMarkerID = 0;
     this.region = this.getInitialRegion();
 
     /*this.onRegionChange = this.onRegionChange.bind(this);*/
   }
   
-  _handleButtonPress = () => {
+  _handleButtonPress = (key) => {
+    this.setState({selectedMarkerID: key});
     this.setModalVisible(true);
   };
 
@@ -136,7 +138,7 @@ export default class App extends Component {
             visible={this.state.modalVisible}
             onRequestClose={() => this.setModalVisible(false)}
             >
-              <Dashboard TelaMapa={this}/>
+                <Dashboard TelaMapa={this} data={this.state.markers[0]}/>
 
           </Modal>
 

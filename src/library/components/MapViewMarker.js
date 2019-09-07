@@ -24,7 +24,7 @@ export default class MapViewMarker extends Component{
                 description={this.description}
                 key={this.id}
                 coordinate={this.coordinate}
-                onCalloutPress={this.event}
+                onCalloutPress={this.event(this.id)}
                 /*image={require('library/img/perfil.png')}*/
             >
                 {/*<MapView.Callout tooltip style={styles.customView}>
