@@ -33,8 +33,17 @@ export default class Dashboard extends Component {
       <View style={[modalStyle, modalBackgroundStyle]}>
         <View style={innerContainerTransparentStyle}>
           <Text>Informações</Text>
+<<<<<<< HEAD
           <Text>{marker}</Text>
           <ListView/>
+=======
+
+          {/*<View style={{padding:30, backgroundColor: 'rgba(52, 52, 52, 0.8)'}}>
+            <ScrollView>*/}
+                <ListView/>
+            {/*</ScrollView>
+          </View>*/}
+>>>>>>> desenvolvimento
 
           <Button title='close'
             onPress={TelaMapa.onCloseModal.bind(TelaMapa)}/>

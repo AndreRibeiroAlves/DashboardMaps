@@ -14,12 +14,11 @@ export default class App extends Component {
   constructor(){
     super();
     this.state = new Sensores().estado;
-    this.state.modalVisible = false;
-    this.state.selectedMarkerID = 0;
     this.region = this.getInitialRegion();
 
     /*this.onRegionChange = this.onRegionChange.bind(this);*/
   }
+<<<<<<< HEAD
 
   onCloseModal = () => {
     this.setState({modalVisible: false});
@@ -29,6 +28,8 @@ export default class App extends Component {
     this.setState({selectedMarkerID: key});
     this.setState({modalVisible: true});
   };
+=======
+>>>>>>> desenvolvimento
   
   _mapReady = () => {
     this.state.markers[0].mark.showCallout();
@@ -125,7 +126,10 @@ export default class App extends Component {
                 title={mar.title}
                 description={mar.description}
                 key={mar.id}
+<<<<<<< HEAD
                 parent={this}
+=======
+>>>>>>> desenvolvimento
                 coordinate={{
                   latitude: mar.latitude,
                   longitude: mar.longitude,
@@ -171,9 +175,12 @@ export default class App extends Component {
         )) }
 
         </ScrollView>
+<<<<<<< HEAD
           {
             this.go()
           }
+=======
+>>>>>>> desenvolvimento
 
       </View>
     );
