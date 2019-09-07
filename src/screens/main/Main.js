@@ -135,7 +135,7 @@ export class Main extends Component {
             visible={this.props.modalEnabled}
             onRequestClose={() => this.props.closeModal()}
             >
-                <Dashboard TelaMapa={this} /*data={this.state.markers[0]}*//>
+                <Dashboard/>
 
           </Modal>
 
