@@ -7,6 +7,12 @@ import Main from 'screens/main/Main';
 import Dashboard from 'screens/dashboard/Dashboard'
 import CustomDrawer from 'library/components/CustomDrawer';
 
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import Reducers from 'screens/Reducers'
+
+let store = createStore(Reducers);
+
 const Navegador = createDrawerNavigator({
   Main: {
     screen: Main
@@ -14,26 +20,19 @@ const Navegador = createDrawerNavigator({
   Dashboard:{
     screen: Dashboard
   }
-  /*ex: {
-    screen: ex
-  }*/
-}/*,{
-  contentComponent: CustomDrawer,
-  initialRouteName: 'Main',
-  drawerPosition: 'left',
-  //drawerWidth: 150
-  drawerBackgroundColor: '#373737',
-  contentOptions:{
-    activeTintColor: '#24C2CB',
-    activeBackgroundColor: '#FFF',
-    inactiveTintColor: '#FFF',
-  }
-  
-}*/);
+});
 
 const AppContainer = createAppContainer(Navegador);
 
-export default AppContainer;
+export default class App extends Component{
+  render(){
+    return(
+      <Provider store={store}>
+          <AppContainer/>
+      </Provider>
+    );
+  }
+}
 
 /*https://riptutorial.com/react-native/example/29660/transparent-modal-example
 https://expo.io/snacks/@react-navigation*/

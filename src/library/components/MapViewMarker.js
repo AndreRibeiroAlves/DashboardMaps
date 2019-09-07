@@ -5,8 +5,10 @@ import { Callout } from 'react-native-maps';
 
 import styles from 'styles/styles';
 import MapView from 'react-native-maps';
+import { connect } from 'react-redux'
+import { openModal, changeMarker } from 'screens/ModalActions'
 
-export default class MapViewMarker extends Component{
+export class MapViewMarker extends Component{
     constructor(props){
         super(props);
     }
@@ -16,8 +18,8 @@ export default class MapViewMarker extends Component{
         this.id = this.props.id;
         this.coordinate = this.props.coordinate;
         this.marker = this.props.marker;
-        this.event = this.props.event;
         this.parent = this.props.parent;
+        const key = this.id;
         return(
             <MapView.Marker
                 ref={mark => this.marker.mark = mark}
@@ -26,10 +28,8 @@ export default class MapViewMarker extends Component{
                 key={this.id}
                 coordinate={this.coordinate}
                 parent={this.parent}
-                onCalloutPress={(key) => {
-                    this.parent.setState({selectedMarkerID: key});
-                    this.parent.setModalVisible(true);
-                  }}
+                onCalloutPress={key => this.props.openModal(key)}
+                onPress={key => this.props.changeMarker(key)}
                 /*image={require('library/img/perfil.png')}*/
             >
                 {/*<MapView.Callout tooltip style={styles.customView}>
@@ -42,3 +42,14 @@ export default class MapViewMarker extends Component{
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return{
+      selectedMarkerID: state.modal.selectedMarkerID,
+      modalEnabled: state.modal.modalEnabled,
+    };
+};
+
+const MVConnect = connect(mapStateToProps,{openModal, changeMarker})(MapViewMarker);
+
+export default MVConnect;

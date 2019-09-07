@@ -10,24 +10,16 @@ import MapViewMarker from 'library/components/MapViewMarker'
 import MapStyle from 'styles/MapStyle'
 import Dashboard from '../dashboard/Dashboard';
 
-export default class App extends Component {
+import { connect } from 'react-redux'
+import { closeModal,changeMarker,openModal } from '../ModalActions'
+
+export class Main extends Component {
   constructor(){
     super();
     this.state = new Sensores().estado;
-    this.state.modalVisible = false;
-    this.state.selectedMarkerID = 0;
     this.region = this.getInitialRegion();
 
     /*this.onRegionChange = this.onRegionChange.bind(this);*/
-  }
-  
-  _handleButtonPress = (key) => {
-    this.setState({selectedMarkerID: key});
-    this.setModalVisible(true);
-  };
-
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
   }
   
   _mapReady = () => {
@@ -80,18 +72,21 @@ export default class App extends Component {
             /*https://stackoverflow.com/questions/39654594/marker-click
               -event-on-react-native-maps-not-working-in-react-ios*/
               
-              <MapViewMarker
-                marker={mar}
+              <MapView.Marker
+                ref={mark => mar.mark = mark}
                 title={mar.title}
                 description={mar.description}
                 key={mar.id}
-                event={this._handleButtonPress}
-                parent={this}
                 coordinate={{
                   latitude: mar.latitude,
                   longitude: mar.longitude,
                 }}
-              />
+                parent={mar.parent}
+                onCalloutPress={()=>this.props.openModal(mar.id)}
+                onPress={()=>this.props.changeMarker(mar.id)}
+              >
+                  
+              </MapView.Marker>
           ))}
 
         </MapView>
@@ -126,6 +121,7 @@ export default class App extends Component {
           /* Dashboard será alocado aqui */
           <ScrollView key={marker.id} style={styles.place}>
             <Text style={styles.title}>{ marker.title }</Text>
+            <Text style={styles.title}>{ this.props.selectedMarkerID }</Text>
             {/*<Button onPress={()=> this.props.navigation.navigate('Dashboard') or <ModalMap/>} title='Dashboard' />*/}
             {/*<Text style={styles.description}>{ place.description }</Text>*/}
           </ScrollView>
@@ -136,8 +132,8 @@ export default class App extends Component {
           <Modal
             animationType='fade'
             transparent={true}
-            visible={this.state.modalVisible}
-            onRequestClose={() => this.setModalVisible(false)}
+            visible={this.props.modalEnabled}
+            onRequestClose={() => this.props.closeModal()}
             >
                 <Dashboard TelaMapa={this} /*data={this.state.markers[0]}*//>
 
@@ -147,3 +143,14 @@ export default class App extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+    return{
+      selectedMarkerID: state.modal.selectedMarkerID,
+      modalEnabled: state.modal.modalEnabled,
+    };
+};
+
+const MainConnect = connect(mapStateToProps,{closeModal,changeMarker,openModal})(Main);
+
+export default MainConnect;

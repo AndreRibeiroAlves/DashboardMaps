@@ -3,8 +3,10 @@ import { ScrollView, View, Text, Dimensions, Button, Modal} from 'react-native';
 
 import styles from 'styles/styles';
 import ListView from 'library/components/ListViewExpandable';
+import { connect } from 'react-redux'
+import { closeModal } from '../ModalActions'
 
-export default class Dashboard extends Component {
+export class Dashboard extends Component {
   constructor(){
     super();
   }
@@ -32,7 +34,7 @@ export default class Dashboard extends Component {
       <View style={[modalStyle, modalBackgroundStyle]}>
         <View style={innerContainerTransparentStyle}>
           <Text>Informações</Text>
-          {/*<Text>{this.props.data.title}</Text>*/}
+          <Text>{this.props.selectedMarkerID}</Text>
 
           {/*<View style={{padding:30, backgroundColor: 'rgba(52, 52, 52, 0.8)'}}>
             <ScrollView>*/}
@@ -40,10 +42,21 @@ export default class Dashboard extends Component {
             {/*</ScrollView>
           </View>*/}
 
-          <Button title='close'
-            onPress={TelaMapa.setModalVisible.bind(TelaMapa, false)}/>
+          {/*<Button title='close'
+            onPress={this.props.closeModal()}/>*/}
         </View>
       </View>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+    return{
+      selectedMarkerID: state.modal.selectedMarkerID,
+      modalEnabled: state.modal.modalEnabled,
+    };
+};
+
+const DashboardConnect = connect(mapStateToProps,{closeModal})(Dashboard);
+
+export default DashboardConnect;
