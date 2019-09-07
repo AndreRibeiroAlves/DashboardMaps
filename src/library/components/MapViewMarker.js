@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, Dimensions} from 'react-native';
+import { ScrollView, View, Text, Dimensions, Modal} from 'react-native';
 
 import { Callout } from 'react-native-maps';
 
 import styles from 'styles/styles';
 import MapView from 'react-native-maps';
+import Dashboard from 'screens/dashboard/Dashboard';
 
 export default class MapViewMarker extends Component{
+
     constructor(props){
         super(props);
+        this.state = {}
+        this.state.modalVisible = false;
     }
+  
+    _handleButtonPress = () => {
+      this.setModalVisible(true);
+    };
+  
+    setModalVisible = (visible) => {
+      this.setState({modalVisible: visible});
+    }
+
     render(){
         this.title = this.props.title;
         this.description = this.props.description;

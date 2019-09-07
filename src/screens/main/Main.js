@@ -14,8 +14,6 @@ export default class App extends Component {
   constructor(){
     super();
     this.state = new Sensores().estado;
-    this.state.modalVisible = false;
-    this.state.selectedMarkerID = 0;
     this.region = this.getInitialRegion();
 
     /*this.onRegionChange = this.onRegionChange.bind(this);*/
