@@ -17,18 +17,15 @@ import { _mapReady } from '../SensoresActions'
 export class Main extends Component {
   constructor(){
     super();
-    this.state = new Sensores().estado;
+    this.state = {}
     this.region = this.getInitialRegion();
 
     /*this.onRegionChange = this.onRegionChange.bind(this);*/
   }
   
-  _mapReady = () => {
-    this.state.markers[0].mark.showCallout();
-  };
-  
   getInitialRegion() {
-    const { latitude, longitude } = this.state.markers[0];
+    //Melhorar retirando a nova instancia
+    const { latitude, longitude } = new Sensores().estado.markers[0];
     return {
         latitude,
         longitude,
@@ -42,7 +39,6 @@ export class Main extends Component {
   }*/
 
   render() {
-    const { latitude, longitude } = this.state.markers[0];
     const tmarkers = this.props.markers;
     const markerid = this.props.selectedMarkerID - 1;
 
@@ -66,12 +62,12 @@ export class Main extends Component {
           zoomEnabled={true}
           showsPointsOfInterest={false}
           showBuildings={false}
-          onMapReady={this._mapReady}
+          onMapReady={this.props._mapReady}
           customMapStyle={MapStyle()}
         >
 
           {/* Markers do Mapa */}
-          {this.state.markers.map(mar => (
+          {tmarkers.map(mar => (
             /*https://stackoverflow.com/questions/39654594/marker-click
               -event-on-react-native-maps-not-working-in-react-ios*/
               
@@ -105,7 +101,7 @@ export class Main extends Component {
               ? e.nativeEvent.contentOffset.x / Dimensions.get('window').width
               : 0;
 
-            const { latitude, longitude, latitudeDelta, longitudeDelta, mark } = this.state.markers[place];
+            const { latitude, longitude, latitudeDelta, longitudeDelta, mark } = tmarkers[place];
 
             
             this.mapView.animateToRegion({
@@ -119,11 +115,13 @@ export class Main extends Component {
               mark.showCallout();
             }, 500)
           }}
+          
         >
-        { this.state.markers.map(marker => (
+        { tmarkers.map(marker => (
           /* Dashboard será alocado aqui */
           <ScrollView key={marker.id} style={styles.place}>
             <Text style={styles.title}>{ marker.title }</Text>
+            <Text style={styles.title}>{ marker.id }</Text>
             <Text style={styles.title}>{ markerid }</Text>
             <Text style={styles.title}>{ tmarkers[markerid].title }</Text>
             {/*<Button onPress={()=> this.props.navigation.navigate('Dashboard') or <ModalMap/>} title='Dashboard' />*/}
