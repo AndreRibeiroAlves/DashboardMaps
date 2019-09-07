@@ -25,6 +25,7 @@ export default class Dashboard extends Component {
     var innerContainerTransparentStyle = {backgroundColor: '#fff', padding: 20};
 
     TelaMapa = this.props.TelaMapa;
+    const marker = this.props.marker;
 
     return (
       /* Tela Principal */
@@ -32,16 +33,11 @@ export default class Dashboard extends Component {
       <View style={[modalStyle, modalBackgroundStyle]}>
         <View style={innerContainerTransparentStyle}>
           <Text>Informações</Text>
-          <Text>{this.props.data.title}</Text>
-
-          {/*<View style={{padding:30, backgroundColor: 'rgba(52, 52, 52, 0.8)'}}>
-            <ScrollView>*/}
-                <ListView/>
-            {/*</ScrollView>
-          </View>*/}
+          <Text>{marker}</Text>
+          <ListView/>
 
           <Button title='close'
-            onPress={TelaMapa.setModalVisible.bind(TelaMapa, false)}/>
+            onPress={TelaMapa.onCloseModal.bind(TelaMapa)}/>
         </View>
       </View>
     );

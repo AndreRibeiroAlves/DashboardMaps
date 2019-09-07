@@ -20,19 +20,57 @@ export default class App extends Component {
 
     /*this.onRegionChange = this.onRegionChange.bind(this);*/
   }
-  
-  _handleButtonPress = (key) => {
-    this.setState({selectedMarkerID: key});
-    this.setModalVisible(true);
-  };
 
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
+  onCloseModal = () => {
+    this.setState({modalVisible: false});
   }
+
+  onOpenModal = key => {
+    this.setState({selectedMarkerID: key});
+    this.setState({modalVisible: true});
+  };
   
   _mapReady = () => {
     this.state.markers[0].mark.showCallout();
   };
+  go(){
+    var modalBackgroundStyle = {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    };
+    var modalStyle = {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 5,
+      margin: 20,
+      backgroundColor: '#ecf0f1',
+    };
+    var innerContainerTransparentStyle = {backgroundColor: '#fff', padding: 20};
+    if (this.state.selectedMarkerID !== null) {
+      const marker = this.state.markers[this.state.selectedMarkerID];
+      if (marker !== null && marker.id !== null) {
+        return(
+          <Modal
+            animationType='fade'
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => this.onCloseModal()}
+            >
+            <View style={[modalStyle, modalBackgroundStyle]}>
+              <View style={innerContainerTransparentStyle}>
+                <Text>Informações</Text>
+                <Text>{marker}</Text>
+                <ListView/>
+
+                <Button title='close'
+                  onPress={this.onCloseModal.bind(this)}/>
+              </View>
+            </View>
+          </Modal>
+        );
+      };
+    };
+  }
   
   getInitialRegion() {
     const { latitude, longitude } = this.state.markers[0];
@@ -50,7 +88,9 @@ export default class App extends Component {
 
   render() {
     const { latitude, longitude } = this.state.markers[0];
-
+    const modalVisible = this.state.modalVisible;
+    const marker = this.state.markers[this.state.selectedMarkerID];
+    
     return (
 
       /* Tela Principal */
@@ -85,7 +125,7 @@ export default class App extends Component {
                 title={mar.title}
                 description={mar.description}
                 key={mar.id}
-                event={this._handleButtonPress}
+                parent={this}
                 coordinate={{
                   latitude: mar.latitude,
                   longitude: mar.longitude,
@@ -131,16 +171,9 @@ export default class App extends Component {
         )) }
 
         </ScrollView>
-
-          <Modal
-            animationType='fade'
-            transparent={true}
-            visible={this.state.modalVisible}
-            onRequestClose={() => this.setModalVisible(false)}
-            >
-                <Dashboard TelaMapa={this} data={this.state.markers[0]}/>
-
-          </Modal>
+          {
+            this.go()
+          }
 
       </View>
     );
