@@ -5,20 +5,19 @@ const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   
     modalBackgroundStyle: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
 
     modalStyle: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+      /*alignItems: 'center',
+      justifyContent: 'center',*/
       padding: 5,
       margin: 20,
-      backgroundColor: '#ecf0f1',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
 
     innerContainerTransparentStyle: {
-      backgroundColor: '#fff',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
       padding: 20,
     },
 
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
 
     text: {
       fontSize: 16,
-      color: '#000000',
+      color: 'white',
       padding: 10,
     },
 

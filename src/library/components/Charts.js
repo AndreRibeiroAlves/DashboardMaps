@@ -65,17 +65,19 @@ export function LineChartMid (props){
     );
   };
 
-  export function LineChartSingleValue (props){
-    return (
-      <Text style={styles.text}>
-          {props.id}. {props.item.type}.
-            {props.item.values.map((item,key) => ( 
-              <Text key={key} style={styles.text}>
-                {item.key}. {item.value}
-              </Text>))
-            }
-      </Text>
-    );
+  export class LineChartSingleValue extends Component{
+    render(){
+      return (
+          <Text style={styles.text}>
+              {this.props.id}. {this.props.item.type}. 
+                {this.props.item.values.map((item,key) => ( 
+                  <Text key={key} style={styles.text}>
+                    {item.key}. {item.value}
+                  </Text>))
+                }
+          </Text>
+        );
+      };
   };
   
   export function DognutChartMultipleValues (props){
