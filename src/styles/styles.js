@@ -11,13 +11,13 @@ const styles = StyleSheet.create({
       flex: 1,
       /*alignItems: 'center',
       justifyContent: 'center',*/
-      padding: 5,
+      padding: 2,
       margin: 20,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: 'rgba(0, 0, 0, 0.6)',
     },
 
     innerContainerTransparentStyle: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: 'transparent',
       padding: 20,
     },
 

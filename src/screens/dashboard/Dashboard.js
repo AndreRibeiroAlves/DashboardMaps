@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text, Dimensions, Button,TouchableOpacity} from 'react-native';
+import { ScrollView, View, Text, Dimensions, Button, TouchableOpacity, Image} from 'react-native';
 
 import styles from 'styles/styles';
 import Sensores from 'objects/Sensores'
@@ -23,27 +23,67 @@ export class Dashboard extends Component {
       /* Tela Principal */
 
       <View style={[styles.modalStyle]}>
-        <View style={styles.innerContainerTransparentStyle}>
+        <ScrollView style={styles.innerContainerTransparentStyle}>
 
           <Text style={styles.topHeading,{color:'white', fontWeight: 'bold',}}>Informações</Text>          
-          {CONTENT.map((tipo, keyTipe) => (
-            tipo.items.map((item, key) => (
-                tipo.type == 1 ? 
-                  <LineChartMid id={key} item={item}/>
-                : tipo.type == 2 ?
-                  <DognutChartMultipleValues id={key} item={item}/>
-                : tipo.type == 3 ?
-                  <LineChartSingleValue id={key} item={item}/>
-                : 
-                  <Text style={styles.text}>
-                    {key}. {item.type}
-                  </Text>
-            ))
+          {CONTENT.map((item, key) => (
+
+          <ItemComponent
+            key={item.category_name}
+            item={item}
+          />
+          
           ))}
-          <Button title='close'
-            onPress={()=>this.props.closeModal()}/>
-        </View>
+        </ScrollView>
+        <Button title='close'
+          onPress={()=>this.props.closeModal()}/>
       </View>
+    );
+  }
+}
+
+class ItemComponent extends Component {
+  //Custom Component for the Expandable List
+  constructor() {
+    super();
+  }
+
+  render() {
+    return (
+        <View style={{paddingBottom:20}}>
+          
+          {/*Header*/}
+          <TouchableOpacity>
+            <Text style={styles.headerText}>{this.props.item.category_name}</Text>
+          </TouchableOpacity>
+
+          <ScrollView>
+
+            {/*Conteudo do ListView*/}
+            {this.props.item.items.map((item, key) => (
+
+              <TouchableOpacity
+                key={key}
+                style={styles.contentList}
+                onPress={() => alert('Id: ' + item.id + ' type: ' + item.type)}>
+
+                {  this.props.item.type == 1 ? 
+                      <LineChartMid id={key} item={item}/>
+                    : this.props.item.type == 2 ?
+                      <DognutChartMultipleValues id={key} item={item}/>
+                    : this.props.item.type == 3 ?
+                      <LineChartSingleValue id={key} item={item}/>
+                    : 
+                      <Text style={styles.text}>
+                        {key}. {item.type}
+                      </Text>
+                  } 
+
+                <View style={styles.separator} />
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
     );
   }
 }
