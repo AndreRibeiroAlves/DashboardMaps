@@ -16,25 +16,12 @@ export class Dashboard extends Component {
 
   render() {
 
-    var modalBackgroundStyle = {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)'
-    };
-    var modalStyle = {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: 5,
-      margin: 20,
-      backgroundColor: '#ecf0f1',
-    };
-    var innerContainerTransparentStyle = {backgroundColor: '#fff', padding: 20};
-
     const selectedMarker = this.state.markers[this.props.selectedMarkerID-1];
     return (
       /* Tela Principal */
 
-      <View style={[modalStyle, modalBackgroundStyle]}>
-        <View style={innerContainerTransparentStyle}>
+      <View style={[styles.modalStyle, styles.modalBackgroundStyle]}>
+        <View style={styles.innerContainerTransparentStyle}>
           <Text>Informações</Text>
           <Text>{selectedMarker.title}</Text>
 

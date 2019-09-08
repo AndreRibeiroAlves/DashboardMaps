@@ -1,5 +1,6 @@
 /*Example of Expandable ListView in React Native*/
 import React, { Component } from 'react';
+import styles from 'styles/styles';
 //import react in our project
 import {
   LayoutAnimation,
@@ -15,94 +16,7 @@ import {
   Dimensions,
 } from 'react-native';
 //import basic react native components
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-} from 'react-native-chart-kit'
-
-/*https://cmichel.io/charts-in-react-native-svg-and-d3-js
-https://www.npmjs.com/package/react-native-chart-kit
-https://www.npmjs.com/package/react-native-svg-charts
-https://live.hopu.eu/#/dashboard/ies-felipe-de-borbon:SmartSpot
-https://www.instamobile.io/react-native-tutorials/react-native-charts/
-https://reactnativeexample.com/tag/chart/*/
-function LineChartMid (props){
-  return (
-    <View>
-      <Text>
-        Bezier Line Chart
-      </Text>
-      <LineChart
-        data={{
-          labels: ['Min','Mid','Max'],
-          datasets: [{
-            data: [
-              12,
-              (12+36)/2,
-              36,
-            ]
-          }]
-        }}
-        width={Dimensions.get('window').width*0.7} // from react-native
-        height={182}
-        chartConfig={{
-          backgroundColor: 'white',
-          backgroundGradientFrom: 'lightgray',
-          backgroundGradientTo: 'silver',
-          decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 20) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 6,
-          }
-        }}
-        bezier
-        style={{
-          marginVertical: 4,
-          borderRadius: 6,
-        }}
-      />
-    </View>
-  );
-};
-
-function LineChartMid1 (props){
-  return (
-    <Text style={styles.text}>
-        {props.id}. {props.item.type}.
-        {props.item.values.map((item,key) => ( 
-          <Text key={key} style={styles.text}>
-            {key}. {item.max}. {item.min}
-          </Text>))
-        }
-    </Text>
-  );
-};
-function LineChartSingleValue (props){
-  return (
-    <Text style={styles.text}>
-        {props.id}. {props.item.type}.
-          {props.item.values.map((item,key) => ( 
-            <Text key={key} style={styles.text}>
-              {item.key}. {item.value}
-            </Text>))
-          }
-    </Text>
-  );
-};
-
-function DognutChartMultipleValues (props){
-  return (
-    <Text style={styles.text}>
-        {props.id}. {props.item.type}.
-          {props.item.values.map((item,key) => ( 
-            <Text key={key} style={styles.text}>
-              {item.key}. {item.value}. {item.gas}
-            </Text>))
-          }
-    </Text>
-  );
-};
+import {LineChartMid,LineChartSingleValue,DognutChartMultipleValues} from './Charts';
 
 class ExpandableItemComponent extends Component {
   //Custom Component for the Expandable List
@@ -164,7 +78,7 @@ class ExpandableItemComponent extends Component {
 
             <TouchableOpacity
               key={key}
-              style={styles.content}
+              style={styles.contentList}
               onPress={() => alert('Id: ' + item.id + ' type: ' + item.type)}>
 
                {  this.props.item.type == 1 ? 
@@ -219,7 +133,7 @@ class ListView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.containerList}>
 
         <Text style={styles.topHeading}>Detalhes</Text>
         
@@ -236,69 +150,6 @@ class ListView extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-  iconStyle: {
-
-    width: 30,
-    height: 30,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    tintColor: '#fff'
-
-  },
-
-  container: {
-    flex: 1,
-    paddingTop: 10,
-    backgroundColor: '#F5FCFF',
-  },
-  topHeading: {
-    paddingLeft: 10,
-    fontSize: 20,
-  },
-  header: {
-    padding: 10,
-    marginVertical: 5,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#0091EA'
-  },
-  headerText: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: 'white',
-  },
-  separator: {
-    height: 0.5,
-    backgroundColor: '#808080',
-    width: '95%',
-    marginLeft: 16,
-    marginRight: 16,
-  },
-  text: {
-    fontSize: 16,
-    color: '#000000',
-    padding: 10,
-  },
-  content: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    backgroundColor: '#fff',
-  },
-  /*icon_circle: {
-    width: 30,
-    height: 30,
-    borderRadius: 50,
-    marginLeft: 16,
-    marginTop: 16,
-    background: rgba(255,255,255,.7),
-    alignItems: 'center',
-    float: left,
-  },*/
-});
 
 //Dummy content to show
 //You can also use dynamic data by calling webservice
