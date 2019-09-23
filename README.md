@@ -18,11 +18,11 @@
 ## Instalação de Dependencias
 
 ### Baixar o Chocolatey
-Abrir o cmd.exe e digitar:
+<p>Abrir o cmd.exe e digitar:
 <p>@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
 ### Procedimentos de Instalação do Node:
-choco install -y nodejs.install python2 jdk8
+<p>choco install -y nodejs.install python2 jdk8
 
 ### Criar ou Clonar e navegar ao Diretório do app
 <p>no cmd digite mkdir myapp
@@ -31,17 +31,17 @@ choco install -y nodejs.install python2 jdk8
 <p>e após digite cd <nome do diretório gerado>
 
 ### Procedimentos de Instalação do YARN:
-npm install -g yarn
+<p>npm install -g yarn
 
 ### Procedimentos de Instalação do Expo:
 <p>yarn add expo-cli
 <p>yarn install
 
 ### Criação do App
-yarn run expo init myapp
+<p>yarn run expo init myapp
 
 ### Inicialização
-yarn run expo start ./myapp
+<p>yarn run expo start ./myapp
 
 ### Procedimentos Sob Demanda:
 <p>Adicionar portas 19000 e 19001 (expo) a excessão no firewall
@@ -57,16 +57,16 @@ yarn run expo start ./myapp
 <p>yarn install
 
 ### Criação do App (Opcional)
-yarn create react-app my-app
+<p>yarn create react-app my-app
 
 #### Iniciar react native
-yarn run react-native init ./myapp
+<p>yarn run react-native init ./myapp
 
 #### Iniciar react web
-yarn start ou npm start
+<p>yarn start ou npm start
 
 ### Observações:
-É possivel realizar as instalações com o padrão neste projeto é com o yarn.
+<p>É possivel realizar as instalações com o padrão neste projeto é com o yarn.
 
 ### Links adicionais:
 <p>https://expo.io/
